@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import AddPostForm from "./components/AddPostForm";
+import Posts from "./components/Posts";
+import {connect} from "react-redux";
+import Alert from "./components/Alert";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App({isShowAlert, alertMessage}) {
+	return (
+		<div className="container">
+			{isShowAlert && <Alert message={alertMessage}/>}
+			<div className="col">
+				<AddPostForm/>
+				<h1>Posts</h1>
+				<Posts/>
+			</div>
+		</div>
+	);
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+	isShowAlert: state.app.isShowAlert,
+	alertMessage: state.app.alertMessage,
+})
+
+export default connect(mapStateToProps, null)(App);
